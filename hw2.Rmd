@@ -1,0 +1,100 @@
+---
+title: "hw2"
+author: "Tanner Boyle"
+date: "February 7, 2020"
+output: html_document
+---
+
+## R Commands Problem 1-3)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r }
+cel <- c(-9.444, -4.444)
+print(cel)
+
+vec200 <- rep(c(3, 1), 100)
+length(vec200)
+
+numPerfect <- floor(sqrt(2001))
+print(numPerfect)
+
+```
+
+
+## Cars and Mileage Problem 1: 
+
+
+```{r  }
+
+library(ggplot2)
+library(dplyr)
+
+head(mpg)
+
+top3 <- top_n(mpg, 3, hwy)
+
+print(top3)
+
+
+```
+
+
+The top three most fuel-efficient models in terms of highway mileage all belong to Volkswagen. From most to least efficient, we have the 1999 Jetta (manual), the 1999 New Beetle (Manual), and the 1999 New Beetle (Automatic). The higher the highway mileage per gallon, the more fuel efficient a car is.
+
+## Problem 2:
+
+
+```{r }
+numCompact <- sum(mpg$class == "compact")
+print(numCompact)
+
+```
+
+
+There are 47 different compact models in this dataset.
+
+## Problem 3:
+
+
+```{r }
+mpg %>% 
+  ggplot(aes(x=hwy, y=cty)) +
+  geom_point()
+
+mpg %>% 
+  count_(vars = c('hwy', 'cty'))
+```
+
+There looks to be a positive linear correlation between highway mileage and city mileage. The relatively few number of datapoints show the unique combinations of highway mileage and city mileage, instead of the 234 total combinations in the dataset. The frequency table listed above has only 78 rows, meaning that there are only 78 unique combinations of highway mileage and city mileage.
+
+## Problem 4:
+
+```{r }
+mpg_1999 <- mpg %>% 
+  filter(year==1999)
+
+mpg_2008 <- mpg %>% 
+  filter(year==2008)
+
+print(summary(mpg_1999))
+print(summary(mpg_2008))
+
+mpg_1999 %>% 
+  ggplot(aes(x=cty, y=hwy)) +
+  geom_point()
+
+mpg_2008 %>% 
+  ggplot(aes(x=cty, y=hwy)) +
+  geom_point()
+```
+
+City mileage is worse at the extremes in 2008 (9-28 instead of 11-35), has a similar median, and has a smaller mean. However, the 3rd Qu. is larger in 2008, which speaks a little to the distribution of cty. 
+
+Highway mileage is also worse at the extremes in 2008 (12-37 instead of 15-44) and has smaller mean, median, and quartiles. I think that it is clear that highway mileage was much stronger in 1999 than 2008. 
+
+One large difference is seen in the scatter plots of cty/hwy -- 2008 has a much more standard positive linear correlation between hwy/cty than 1999 does.
+
+I think that data supports the notion that cars were more fuel efficient in general in 1999 -- however, highway and city mileage are much more closely aligned in 2008.
